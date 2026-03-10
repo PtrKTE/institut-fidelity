@@ -13,6 +13,8 @@ use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\Api\ClienteApiController;
 use App\Http\Controllers\Api\FactureApiController;
 use App\Http\Controllers\Api\StatsApiController;
+use App\Http\Controllers\Cliente\ClienteAuthController;
+use App\Http\Controllers\Cliente\EspaceClienteController;
 
 // Auth routes
 Route::get('/', fn() => redirect()->route('login'));
@@ -122,3 +124,47 @@ Route::middleware(['auth', 'multi_session', 'session_timeout', 'anti_hijack', 'a
             Route::get('/compta', [StatsApiController::class, 'compta'])->name('api.stats.compta');
         });
     });
+
+// ═══════════════════════════════════════════════════════════════
+// ESPACE CLIENTE (PWA)
+// ═══════════════════════════════════════════════════════════════
+Route::prefix('espace-cliente')->group(function () {
+
+    // Offline page
+    Route::get('/offline', fn() => view('cliente.offline'))->name('espace-cliente.offline');
+
+    // Auth cliente (public)
+    Route::get('/login', [ClienteAuthController::class, 'showLogin'])->name('espace-cliente.login');
+    Route::post('/login', [ClienteAuthController::class, 'login']);
+    Route::get('/verif-email', [ClienteAuthController::class, 'showVerifEmail'])->name('espace-cliente.verif-email');
+    Route::post('/verif-email', [ClienteAuthController::class, 'verifEmail']);
+    Route::get('/inscription', [ClienteAuthController::class, 'showRegister'])->name('espace-cliente.register');
+    Route::post('/inscription', [ClienteAuthController::class, 'register']);
+    Route::get('/activation', [ClienteAuthController::class, 'showActivation'])->name('espace-cliente.activation');
+    Route::post('/activation', [ClienteAuthController::class, 'activate']);
+    Route::post('/resend-otp', [ClienteAuthController::class, 'resendOtp'])->name('espace-cliente.resend-otp');
+    Route::get('/reset-password', [ClienteAuthController::class, 'showResetRequest'])->name('espace-cliente.reset-request');
+    Route::post('/reset-password/send', [ClienteAuthController::class, 'sendResetOtp'])->name('espace-cliente.reset-send');
+    Route::get('/reset-password/confirm', [ClienteAuthController::class, 'showResetConfirm'])->name('espace-cliente.reset-confirm');
+    Route::post('/reset-password/confirm', [ClienteAuthController::class, 'resetPassword']);
+
+    // Pages protégées (cliente connectée)
+    Route::middleware('cliente_auth')->group(function () {
+        Route::get('/', [EspaceClienteController::class, 'home'])->name('espace-cliente.home');
+        Route::get('/carte', [EspaceClienteController::class, 'carte'])->name('espace-cliente.carte');
+        Route::get('/profil', [EspaceClienteController::class, 'profil'])->name('espace-cliente.profil');
+        Route::post('/profil/email', [EspaceClienteController::class, 'updateEmail'])->name('espace-cliente.update-email');
+        Route::post('/profil/telephone', [EspaceClienteController::class, 'updatePhone'])->name('espace-cliente.update-phone');
+        Route::get('/rendezvous', [EspaceClienteController::class, 'rendezvous'])->name('espace-cliente.rendezvous');
+        Route::post('/rendezvous', [EspaceClienteController::class, 'storeRendezvous'])->name('espace-cliente.store-rdv');
+        Route::post('/rendezvous/{id}/annuler', [EspaceClienteController::class, 'cancelRendezvous'])->name('espace-cliente.cancel-rdv');
+        Route::get('/historique', [EspaceClienteController::class, 'historique'])->name('espace-cliente.historique');
+        Route::post('/logout', [ClienteAuthController::class, 'logout'])->name('espace-cliente.logout');
+
+        // API cliente (JSON)
+        Route::get('/api/stats', [EspaceClienteController::class, 'apiStats'])->name('espace-cliente.api.stats');
+        Route::get('/api/historique', [EspaceClienteController::class, 'apiHistorique'])->name('espace-cliente.api.historique');
+        Route::get('/api/depenses-mensuelles', [EspaceClienteController::class, 'apiDepensesMensuelles'])->name('espace-cliente.api.depenses-mensuelles');
+        Route::get('/api/top-prestations', [EspaceClienteController::class, 'apiTopPrestations'])->name('espace-cliente.api.top-prestations');
+    });
+});

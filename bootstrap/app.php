@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'session_timeout' => \App\Http\Middleware\CheckSessionTimeout::class,
             'anti_hijack' => \App\Http\Middleware\AntiHijack::class,
             'audit' => \App\Http\Middleware\AuditRequest::class,
+            'cliente_auth' => \App\Http\Middleware\ClienteAuth::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

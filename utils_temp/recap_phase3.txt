@@ -1,0 +1,150 @@
+====================================================================
+  RECAP PHASE 3 — PWA Cliente Mobile
+  Projet : Prestige by ProNails (Fidelity)
+  Date : 10 mars 2026
+====================================================================
+
+STATUT : COMPLETE
+
+--------------------------------------------------------------------
+1. SCAFFOLD PWA
+--------------------------------------------------------------------
+- public/manifest.json     → Manifest PWA (standalone, portrait, theme #c4226e)
+- public/sw.js             → Service Worker (cache-first statiques, network-first API, offline fallback)
+- public/css/cliente.css   → CSS complet pour l'espace cliente mobile
+- public/img/icon-192.png  → Icone PWA 192x192
+- public/img/icon-512.png  → Icone PWA 512x512
+- resources/views/cliente/offline.blade.php → Page hors-ligne brandee
+
+--------------------------------------------------------------------
+2. CONTROLLERS
+--------------------------------------------------------------------
+app/Http/Controllers/Cliente/ClienteAuthController.php
+  - showLogin / login          → Connexion cliente (email + mot_de_passe)
+  - showVerifEmail / verifEmail → Verification email (active/inactive/absent)
+  - showRegister / register    → Auto-inscription avec generation carte/barcode
+  - showActivation / activate  → Activation compte via OTP 6 chiffres
+  - resendOtp                  → Renvoi OTP (AJAX)
+  - showResetRequest / sendResetOtp → Demande reset mot de passe
+  - showResetConfirm / resetPassword → Confirmation reset avec OTP
+  - logout                     → Deconnexion cliente
+
+app/Http/Controllers/Cliente/EspaceClienteController.php
+  - home         → Accueil (mini carte, stats, prochain RDV, top prestations)
+  - carte        → Carte fidelite complete avec barcode + download PNG
+  - profil       → Profil avec modification email/telephone via OTP
+  - rendezvous   → Liste RDV + creation nouveau RDV + annulation
+  - historique   → Liste factures paginee + graphique depenses
+  - apiStats     → JSON: nb_visites, total_depense, taux_reduction, rdv_en_attente
+  - apiHistorique → JSON: factures paginee avec prestations
+  - apiDepensesMensuelles → JSON: depenses par mois (12 derniers)
+  - apiTopPrestations → JSON: top 5 prestations de la cliente
+
+--------------------------------------------------------------------
+3. MIDDLEWARE
+--------------------------------------------------------------------
+- app/Http/Middleware/ClienteAuth.php → Verifie session('cliente_id')
+- Alias 'cliente_auth' enregistre dans bootstrap/app.php
+
+--------------------------------------------------------------------
+4. ROUTES (28 routes, prefix /espace-cliente)
+--------------------------------------------------------------------
+Auth publiques :
+  GET  /login              → Page connexion
+  POST /login              → Traitement connexion
+  GET  /verif-email        → Page verification email
+  POST /verif-email        → API verification (JSON)
+  GET  /inscription        → Page inscription
+  POST /inscription        → API inscription (JSON)
+  GET  /activation         → Page activation OTP
+  POST /activation         → Traitement activation
+  POST /resend-otp         → API renvoi OTP (JSON)
+  GET  /reset-password     → Page demande reset
+  POST /reset-password/send → API envoi OTP reset (JSON)
+  GET  /reset-password/confirm → Page confirmation reset
+  POST /reset-password/confirm → Traitement reset
+  GET  /offline            → Page hors-ligne
+
+Protegees (cliente_auth) :
+  GET  /                   → Accueil / Home
+  GET  /carte              → Carte fidelite
+  GET  /profil             → Profil
+  POST /profil/email       → API modification email (JSON)
+  POST /profil/telephone   → API modification telephone (JSON)
+  GET  /rendezvous         → Liste RDV
+  POST /rendezvous         → API creation RDV (JSON)
+  POST /rendezvous/{id}/annuler → API annulation RDV (JSON)
+  GET  /historique          → Historique factures
+  POST /logout              → Deconnexion
+  GET  /api/stats           → API stats cliente (JSON)
+  GET  /api/historique      → API historique pagine (JSON)
+  GET  /api/depenses-mensuelles → API graphique depenses (JSON)
+  GET  /api/top-prestations → API top 5 prestations (JSON)
+
+--------------------------------------------------------------------
+5. VUES BLADE (12 fichiers)
+--------------------------------------------------------------------
+Layout :
+  - layouts/cliente.blade.php → Layout PWA (meta PWA, bottom nav, install banner, SW registration)
+
+Auth :
+  - cliente/auth/login.blade.php        → Connexion
+  - cliente/auth/verif-email.blade.php  → Verification email (point d'entree)
+  - cliente/auth/register.blade.php     → Inscription (nom, prenom, email, tel, lieu)
+  - cliente/auth/activation.blade.php   → Activation OTP (code + mot de passe)
+  - cliente/auth/reset-request.blade.php → Demande reset password
+  - cliente/auth/reset-confirm.blade.php → Confirmation reset avec OTP
+
+Pages :
+  - cliente/home.blade.php       → Accueil (mini carte, 3 stats, prochain RDV, top prestations, raccourcis)
+  - cliente/carte.blade.php      → Carte fidelite complete + download html2canvas
+  - cliente/profil.blade.php     → Profil + modals modification email/telephone
+  - cliente/rendezvous.blade.php → Liste RDV + modal nouveau RDV + annulation
+  - cliente/historique.blade.php → Historique factures + graphique Chart.js depenses mensuelles
+
+Hors-ligne :
+  - cliente/offline.blade.php    → Page hors connexion brandee
+
+--------------------------------------------------------------------
+6. FONCTIONNALITES PWA
+--------------------------------------------------------------------
+- Manifest installable (standalone, portrait, icones 192/512)
+- Service Worker avec strategies :
+  - Statiques (CSS/JS/fonts/images) : cache-first
+  - API : network-first avec fallback JSON offline
+  - Pages HTML : network-first avec fallback cache puis offline
+- Banniere d'installation personnalisee (dismissible, localStorage)
+- Badge compteur RDV en attente sur bottom nav
+- Bottom navigation fixe (5 onglets : Accueil, Carte, RDV, Historique, Profil)
+- Safe area padding pour iPhone (env(safe-area-inset-bottom))
+- Responsive : max-width 480px (520px desktop), bottom nav centree sur desktop
+
+--------------------------------------------------------------------
+7. DESIGN MOBILE
+--------------------------------------------------------------------
+- Mini carte fidelite gradient (#c4226e → #8b1a52) avec taux reduction
+- Carte complete full-size avec barcode, expiration, download PNG
+- Stats grid 3 colonnes (visites, total F, membre depuis)
+- RDV cards avec date box coloree + badges statut
+- Factures items avec montant aligne a droite
+- Avatar initiales sur profil
+- Modals email/telephone avec flow OTP integre
+- Graphique depenses mensuelles (Chart.js area)
+- Empty states avec icones et CTA
+- Animations fadeIn, skeleton loaders
+
+--------------------------------------------------------------------
+8. DIRECTIVE BLADE CUSTOM
+--------------------------------------------------------------------
+- @auth_cliente / @end_auth_cliente → Conditionnel sur session('cliente_id')
+- Enregistree dans AppServiceProvider::boot()
+
+====================================================================
+  ACCES : http://localhost:8888/fidelity-laravel/espace-cliente/login
+
+  PROCHAINE ETAPE : Phase 4 — Modules Laravel restants + polish
+  - Revoir vues par role (admin, agent, compta, comm)
+  - Dark mode toggle
+  - Notifications push back-office
+  - Exports PDF/Excel
+====================================================================

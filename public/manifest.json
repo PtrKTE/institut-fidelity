@@ -1,0 +1,28 @@
+{
+    "name": "Prestige by ProNails",
+    "short_name": "Prestige",
+    "description": "Espace cliente — Programme de fidélité ProNails Abidjan",
+    "start_url": "/fidelity-laravel/espace-cliente",
+    "scope": "/fidelity-laravel/espace-cliente",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#c4226e",
+    "background_color": "#ffffff",
+    "lang": "fr",
+    "dir": "ltr",
+    "categories": ["beauty", "lifestyle"],
+    "icons": [
+        {
+            "src": "/fidelity-laravel/public/img/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/fidelity-laravel/public/img/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
