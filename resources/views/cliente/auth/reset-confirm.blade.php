@@ -1,8 +1,10 @@
 @extends('layouts.cliente')
 @section('title', 'Reinitialiser — Prestige by ProNails')
 
+@section('full-page', true)
+
 @section('content')
-<div class="cliente-auth" style="min-height:100vh;padding-bottom:0;">
+<div class="cliente-auth">
     <div class="cliente-auth-card">
         <div class="auth-logo">
             <img src="{{ url('/public/img/lgp.png') }}" alt="ProNails" style="height:40px">

@@ -1,5 +1,6 @@
 @extends('layouts.cliente')
 @section('title', 'Ma carte — Prestige by ProNails')
+@section('show-nav', true)
 
 @section('content')
 <div class="cliente-header">

@@ -7,13 +7,14 @@
     min-height: 100vh;
     background: var(--gradient-brand);
     font-family: var(--font-primary);
-    padding-bottom: 72px; /* space for bottom nav */
+    padding-bottom: 80px; /* space for bottom nav */
 }
 
 .cliente-content {
     max-width: 480px;
     margin: 0 auto;
     padding: 16px;
+    animation: fadeIn 0.35s ease;
 }
 
 /* Bottom Navigation */
@@ -24,12 +25,12 @@
     right: 0;
     height: 64px;
     background: #fff;
-    border-top: 1px solid rgba(196, 34, 110, 0.1);
+    border-top: 1px solid rgba(196, 34, 110, 0.08);
     display: flex;
     align-items: center;
     justify-content: space-around;
     z-index: 1000;
-    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
     padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -39,23 +40,23 @@
     align-items: center;
     gap: 2px;
     text-decoration: none;
-    color: #888;
-    font-size: 0.68rem;
+    color: #aaa;
+    font-size: 0.65rem;
     font-weight: 500;
-    padding: 6px 12px;
+    padding: 6px 14px;
     border-radius: var(--radius-sm);
-    transition: color 0.18s, background 0.18s;
+    transition: color 0.2s;
     position: relative;
 }
 
 .cliente-bottom-nav a i {
-    font-size: 1.25rem;
-    transition: transform 0.18s;
+    font-size: 1.2rem;
+    transition: transform 0.2s;
 }
 
 .cliente-bottom-nav a.active {
     color: var(--color-primary);
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .cliente-bottom-nav a.active i {
@@ -69,11 +70,11 @@
 /* Badge compteur */
 .nav-badge {
     position: absolute;
-    top: 0;
-    right: 4px;
+    top: -2px;
+    right: 6px;
     background: var(--color-primary);
     color: #fff;
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     font-weight: 700;
     min-width: 16px;
     height: 16px;
@@ -87,25 +88,25 @@
 /* Header cliente */
 .cliente-header {
     text-align: center;
-    padding: 20px 0 12px;
+    padding: 16px 0 12px;
 }
 
 .cliente-header .logo {
-    height: 36px;
-    margin-bottom: 4px;
+    height: 32px;
+    margin-bottom: 6px;
 }
 
 .cliente-header .welcome {
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--color-primary-dark);
     margin: 0;
 }
 
 .cliente-header .subtitle {
-    font-size: 0.8rem;
-    color: #777;
-    margin: 0;
+    font-size: 0.78rem;
+    color: #888;
+    margin: 2px 0 0;
 }
 
 /* Cards */
@@ -114,7 +115,7 @@
     border-radius: var(--radius-md);
     padding: 16px;
     margin-bottom: 12px;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     animation: fadeIn 0.4s ease;
 }
 
@@ -128,12 +129,13 @@
 /* Mini carte fidélité */
 .mini-carte {
     background: linear-gradient(135deg, #c4226e 0%, #8b1a52 100%);
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 14px;
+    padding: 18px;
     color: #fff;
     position: relative;
     overflow: hidden;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 16px rgba(196, 34, 110, 0.25);
 }
 
 .mini-carte::after {
@@ -149,35 +151,35 @@
 }
 
 .mini-carte .carte-label {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    opacity: 0.8;
+    letter-spacing: 2px;
+    opacity: 0.7;
 }
 
 .mini-carte .carte-nom {
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 700;
     margin: 4px 0;
 }
 
 .mini-carte .carte-num {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-family: 'Courier New', monospace;
-    letter-spacing: 1px;
-    opacity: 0.9;
+    letter-spacing: 1.5px;
+    opacity: 0.85;
 }
 
 .mini-carte .carte-taux {
     position: absolute;
-    top: 12px;
+    top: 14px;
     right: 16px;
     background: var(--color-accent-gold);
     color: #333;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 10px;
+    padding: 3px 10px;
+    border-radius: 12px;
     z-index: 1;
 }
 
@@ -186,27 +188,29 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .cliente-stat-item {
     background: #fff;
-    border-radius: var(--radius-sm);
-    padding: 12px 8px;
+    border-radius: var(--radius-md);
+    padding: 14px 8px;
     text-align: center;
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .cliente-stat-item .stat-value {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: var(--color-primary);
 }
 
 .cliente-stat-item .stat-label {
-    font-size: 0.65rem;
-    color: #888;
+    font-size: 0.62rem;
+    color: #999;
     margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
 /* RDV card */
@@ -230,8 +234,8 @@
     text-align: center;
     background: var(--color-primary);
     color: #fff;
-    border-radius: 8px;
-    padding: 6px 8px;
+    border-radius: 10px;
+    padding: 8px;
 }
 
 .rdv-date-box .rdv-day {
@@ -241,13 +245,15 @@
 }
 
 .rdv-date-box .rdv-month {
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    margin-top: 2px;
 }
 
 .rdv-info {
     flex: 1;
+    min-width: 0;
 }
 
 .rdv-info .rdv-prestation {
@@ -263,10 +269,11 @@
 
 /* Status badges */
 .badge-statut {
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 600;
     padding: 3px 8px;
     border-radius: 10px;
+    white-space: nowrap;
 }
 
 .badge-en_attente { background: #fff3cd; color: #856404; }
@@ -289,8 +296,8 @@
 }
 
 .facture-item .facture-date {
-    font-size: 0.75rem;
-    color: #888;
+    font-size: 0.72rem;
+    color: #999;
 }
 
 .facture-item .facture-prestations {
@@ -309,7 +316,7 @@
 /* Carte fidélité full */
 .carte-fidelite-full {
     width: 100%;
-    max-width: 400px;
+    max-width: 380px;
     aspect-ratio: 1.586;
     margin: 0 auto;
     background: linear-gradient(135deg, #c4226e 0%, #6a1039 50%, #c4226e 100%);
@@ -341,7 +348,7 @@
 }
 
 .carte-fidelite-full .carte-brand {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     text-transform: uppercase;
     letter-spacing: 2px;
     opacity: 0.7;
@@ -350,20 +357,20 @@
 .carte-fidelite-full .carte-gold {
     color: var(--color-accent-gold);
     font-weight: 700;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
 }
 
 .carte-fidelite-full .carte-holder {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin: 16px 0 4px;
+    margin: 14px 0 4px;
 }
 
 .carte-fidelite-full .carte-number {
     font-family: 'Courier New', monospace;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     letter-spacing: 2px;
     opacity: 0.9;
 }
@@ -379,13 +386,13 @@
 }
 
 .carte-fidelite-full .carte-expiry-label {
-    font-size: 0.55rem;
+    font-size: 0.5rem;
     text-transform: uppercase;
     opacity: 0.6;
 }
 
 .carte-fidelite-full .carte-expiry {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
 }
 
@@ -407,14 +414,15 @@
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 700;
     margin: 0 auto 12px;
+    box-shadow: 0 4px 12px rgba(196, 34, 110, 0.25);
 }
 
 .profil-field {
@@ -422,7 +430,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f5f5f5;
 }
 
 .profil-field:last-child {
@@ -431,108 +439,167 @@
 
 .profil-field .field-label {
     font-size: 0.75rem;
-    color: #888;
+    color: #999;
 }
 
 .profil-field .field-value {
     font-weight: 600;
     font-size: 0.85rem;
     color: #333;
+    text-align: right;
 }
 
-/* Auth pages */
+/* ─── Auth pages ──────────────────────────────────────── */
 .cliente-auth {
     min-height: 100vh;
     background: var(--gradient-brand);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 24px 16px;
     font-family: var(--font-primary);
 }
 
 .cliente-auth-card {
     background: #fff;
-    border-radius: var(--radius-lg);
-    padding: 32px 24px;
+    border-radius: 20px;
+    padding: 36px 28px;
     width: 100%;
-    max-width: 400px;
-    box-shadow: var(--shadow-lg);
+    max-width: 380px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
     animation: fadeIn 0.5s ease;
 }
 
 .cliente-auth-card .auth-logo {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .cliente-auth-card .auth-logo img {
-    height: 48px;
+    height: 44px;
 }
 
 .cliente-auth-card .auth-title {
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: var(--color-primary-dark);
     margin-bottom: 20px;
 }
 
-/* Install banner */
+/* Input with icon */
+.input-icon-wrap {
+    position: relative;
+}
+
+.input-icon-wrap .input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #bbb;
+    font-size: 0.85rem;
+    pointer-events: none;
+}
+
+.input-icon-wrap .fid-input {
+    padding-left: 40px;
+}
+
+.btn-eye {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #bbb;
+    cursor: pointer;
+    padding: 4px;
+    font-size: 0.9rem;
+}
+
+.btn-eye:hover {
+    color: #888;
+}
+
+/* ─── Install banner ──────────────────────────────────── */
 .pwa-install-banner {
     position: fixed;
-    bottom: 72px;
-    left: 12px;
-    right: 12px;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    max-width: 420px;
+    margin: 0 auto;
     background: #fff;
-    border-radius: var(--radius-md);
+    border-radius: 16px;
     padding: 14px 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    display: flex;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
     align-items: center;
     gap: 12px;
-    z-index: 999;
-    animation: slideUp 0.4s ease;
+    z-index: 1100;
     display: none;
 }
 
-.pwa-install-banner.show { display: flex; }
+.pwa-install-banner.show {
+    display: flex;
+    animation: slideUp 0.4s ease;
+}
 
 .pwa-install-banner .pwa-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    object-fit: contain;
+    background: #fff6f9;
+    padding: 4px;
+    flex-shrink: 0;
 }
 
 .pwa-install-banner .pwa-text {
     flex: 1;
-    font-size: 0.8rem;
-    color: #333;
+    font-size: 0.78rem;
+    color: #555;
+    line-height: 1.3;
 }
 
 .pwa-install-banner .pwa-text strong {
     display: block;
     font-size: 0.85rem;
+    color: #333;
+    margin-bottom: 1px;
 }
 
 .pwa-install-banner .btn-install {
     background: var(--color-primary);
     color: #fff;
     border: none;
-    padding: 8px 16px;
+    padding: 8px 18px;
     border-radius: 20px;
     font-size: 0.78rem;
     font-weight: 600;
     cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.pwa-install-banner .btn-install:hover {
+    background: var(--color-primary-dark);
 }
 
 .pwa-install-banner .btn-dismiss {
     background: none;
     border: none;
-    color: #aaa;
-    font-size: 1.2rem;
+    color: #ccc;
+    font-size: 1.3rem;
     cursor: pointer;
-    padding: 0 4px;
+    padding: 0 2px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.pwa-install-banner .btn-dismiss:hover {
+    color: #999;
 }
 
 @keyframes slideUp {
@@ -540,33 +607,25 @@
     to { transform: translateY(0); opacity: 1; }
 }
 
-/* Pull to refresh indicator */
-.ptr-indicator {
-    text-align: center;
-    padding: 12px;
-    color: var(--color-primary);
-    font-size: 0.8rem;
-    display: none;
-}
-
 /* Empty state */
 .cliente-empty {
     text-align: center;
     padding: 40px 20px;
-    color: #aaa;
+    color: #bbb;
 }
 
 .cliente-empty i {
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-bottom: 12px;
     opacity: 0.4;
 }
 
 .cliente-empty p {
     font-size: 0.85rem;
+    color: #999;
 }
 
-/* Responsive tweaks */
+/* ─── Responsive ──────────────────────────────────────── */
 @media (min-width: 768px) {
     .cliente-content {
         max-width: 520px;
@@ -578,5 +637,23 @@
         left: 50%;
         transform: translateX(-50%);
         border-radius: 16px 16px 0 0;
+    }
+
+    .pwa-install-banner {
+        bottom: 80px;
+    }
+}
+
+@media (max-width: 380px) {
+    .cliente-auth-card {
+        padding: 28px 20px;
+    }
+
+    .cliente-stats {
+        gap: 6px;
+    }
+
+    .cliente-stat-item .stat-value {
+        font-size: 1rem;
     }
 }
