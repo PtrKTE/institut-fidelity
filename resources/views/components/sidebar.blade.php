@@ -3,23 +3,41 @@
     $menus = [
         'superadmin' => [
             ['route' => 'dashboard', 'icon' => 'fas fa-chart-pie', 'label' => 'Dashboard'],
-            // ['route' => 'clientes.index', 'icon' => 'fas fa-users', 'label' => 'Clientes'],
-            // ['route' => 'factures.index', 'icon' => 'fas fa-file-invoice', 'label' => 'Factures'],
-            // ['route' => 'utilisateurs.index', 'icon' => 'fas fa-user-shield', 'label' => 'Utilisateurs'],
-            // ['route' => 'rendezvous.index', 'icon' => 'fas fa-calendar-alt', 'label' => 'Rendez-vous'],
-            // ['route' => 'communications.index', 'icon' => 'fas fa-envelope', 'label' => 'Communications'],
+            ['route' => 'clientes.index', 'icon' => 'fas fa-users', 'label' => 'Clientes'],
+            ['route' => 'caisse', 'icon' => 'fas fa-cash-register', 'label' => 'Caisse'],
+            ['route' => 'factures.index', 'icon' => 'fas fa-file-invoice', 'label' => 'Factures'],
+            ['route' => 'rendezvous.index', 'icon' => 'fas fa-calendar-alt', 'label' => 'Rendez-vous'],
+            ['route' => 'depenses.index', 'icon' => 'fas fa-receipt', 'label' => 'Depenses'],
+            ['route' => 'operations-bancaires.index', 'icon' => 'fas fa-university', 'label' => 'Banque'],
+            ['route' => 'utilisateurs.index', 'icon' => 'fas fa-user-shield', 'label' => 'Utilisateurs'],
+            ['route' => 'communications.index', 'icon' => 'fas fa-envelope', 'label' => 'Communications'],
         ],
         'admin' => [
             ['route' => 'dashboard', 'icon' => 'fas fa-chart-pie', 'label' => 'Dashboard'],
+            ['route' => 'clientes.index', 'icon' => 'fas fa-users', 'label' => 'Clientes'],
+            ['route' => 'caisse', 'icon' => 'fas fa-cash-register', 'label' => 'Caisse'],
+            ['route' => 'factures.index', 'icon' => 'fas fa-file-invoice', 'label' => 'Factures'],
+            ['route' => 'rendezvous.index', 'icon' => 'fas fa-calendar-alt', 'label' => 'Rendez-vous'],
+            ['route' => 'depenses.index', 'icon' => 'fas fa-receipt', 'label' => 'Depenses'],
+            ['route' => 'operations-bancaires.index', 'icon' => 'fas fa-university', 'label' => 'Banque'],
         ],
         'agent' => [
             ['route' => 'dashboard', 'icon' => 'fas fa-chart-line', 'label' => 'Dashboard'],
+            ['route' => 'clientes.index', 'icon' => 'fas fa-users', 'label' => 'Clientes'],
+            ['route' => 'caisse', 'icon' => 'fas fa-cash-register', 'label' => 'Caisse'],
+            ['route' => 'rendezvous.index', 'icon' => 'fas fa-calendar-alt', 'label' => 'Rendez-vous'],
+            ['route' => 'depenses.index', 'icon' => 'fas fa-receipt', 'label' => 'Depenses'],
+            ['route' => 'operations-bancaires.index', 'icon' => 'fas fa-university', 'label' => 'Banque'],
         ],
         'compta' => [
             ['route' => 'dashboard', 'icon' => 'fas fa-calculator', 'label' => 'Dashboard'],
+            ['route' => 'factures.index', 'icon' => 'fas fa-file-invoice', 'label' => 'Factures'],
         ],
         'comm' => [
             ['route' => 'dashboard', 'icon' => 'fas fa-bullhorn', 'label' => 'Dashboard'],
+            ['route' => 'clientes.index', 'icon' => 'fas fa-users', 'label' => 'Clientes'],
+            ['route' => 'rendezvous.index', 'icon' => 'fas fa-calendar-alt', 'label' => 'Rendez-vous'],
+            ['route' => 'communications.index', 'icon' => 'fas fa-envelope', 'label' => 'Communications'],
         ],
     ];
     $items = $menus[$role] ?? [];
@@ -34,7 +52,7 @@
     <nav class="fid-sidebar-nav">
         @foreach($items as $item)
             <a href="{{ route($item['route']) }}"
-               class="fid-sidebar-link {{ request()->routeIs($item['route']) ? 'active' : '' }}">
+               class="fid-sidebar-link {{ request()->routeIs($item['route']) || request()->routeIs($item['route'] . '.*') ? 'active' : '' }}">
                 <i class="{{ $item['icon'] }}"></i>
                 <span>{{ $item['label'] }}</span>
             </a>

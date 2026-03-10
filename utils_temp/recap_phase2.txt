@@ -1,0 +1,118 @@
+====================================================================
+  RECAP PHASE 2 — Migration Laravel Core
+  Projet : Prestige by ProNails (Fidelity)
+  Date : 10 mars 2026
+====================================================================
+
+STATUT : COMPLETE
+
+--------------------------------------------------------------------
+1. SERVICES CREES (app/Services/)
+--------------------------------------------------------------------
+- AuditService.php      → Double logging (DB audit_logs + fichier storage/logs/audit.log)
+- BarcodeService.php    → Generation carte fidelite (FID+uniqid) + barcode PNG (Picqer CODE_128)
+- TwilioService.php     → Envoi SMS et WhatsApp via Twilio SDK
+- OtpService.php        → Generation OTP 6 chiffres, verification (10 min expiry), envoi email
+
+--------------------------------------------------------------------
+2. CONTROLLERS WEB (app/Http/Controllers/)
+--------------------------------------------------------------------
+- DashboardController.php         → Dispatch par role vers dashboard/{role}.blade.php
+- ClienteController.php           → CRUD complet, detection doublons, generation carte/barcode, filtres agent
+- FactureController.php           → Caisse/POS, transaction DB, facture + prestations
+- RendezvousController.php        → CRUD + verification dispo creneaux, gestion statuts
+- DepenseController.php           → Insert batch via connexion mysql_latin1, filtres date/agent
+- OperationBancaireController.php → Insert batch avec batch_id auto, types versement/cheque
+- UserController.php              → CRUD superadmin only, gestion roles et lieux
+- CommunicationController.php     → Campagnes email/SMS/WhatsApp, placeholders, logging comm_logs
+
+--------------------------------------------------------------------
+3. CONTROLLERS API (app/Http/Controllers/Api/)
+--------------------------------------------------------------------
+- ClienteApiController.php  → 12 endpoints (recherche, modification rapide, suppression,
+                               maj taux, generation identifiants, details FidPlus)
+- FactureApiController.php  → 3 endpoints (liste filtree, detail, catalogue prestations)
+- StatsApiController.php    → 4 endpoints (main, ca-jour, ca-lieu, compta)
+
+--------------------------------------------------------------------
+4. VUES BLADE (resources/views/)
+--------------------------------------------------------------------
+Dashboards (5 roles) :
+  - dashboard/superadmin.blade.php  → 7 stats + line chart CA 30j + doughnut CA par lieu
+  - dashboard/admin.blade.php       → 4 stats + line chart + doughnut
+  - dashboard/agent.blade.php       → 3 stats + raccourcis + bar chart CA 7j
+  - dashboard/compta.blade.php      → Date picker + 4 stats + cards par lieu avec modes paiement
+  - dashboard/comm.blade.php        → 3 stats + raccourcis campagne
+
+Clientes :
+  - clientes/index.blade.php    → DataTable, checkboxes, taux inline, bulk ops, filtres
+  - clientes/create.blade.php   → Formulaire avec indicatif tel (+225/+33/+1)
+  - clientes/show.blade.php     → Fiche cliente, carte fidelite, stats, top prestations
+  - clientes/edit.blade.php     → Formulaire complet + regeneration carte/barcode
+
+Factures :
+  - factures/create.blade.php   → Interface caisse/POS, lignes dynamiques, recap temps reel
+  - factures/index.blade.php    → DataTables AJAX, filtres, modal detail
+  - factures/show.blade.php     → Detail facture avec prestations
+
+Rendez-vous :
+  - rendezvous/index.blade.php  → Liste avec badges statut, actions inline AJAX
+  - rendezvous/create.blade.php → Autocomplete cliente, date/heure/lieu/prestation
+
+Depenses :
+  - depenses/index.blade.php    → Liste + modal ajout batch multi-lignes
+
+Operations bancaires :
+  - operations-bancaires/index.blade.php → Liste + modal ajout batch
+
+Utilisateurs :
+  - utilisateurs/index.blade.php  → Table simple
+  - utilisateurs/create.blade.php → Formulaire avec role + lieu conditionnel
+  - utilisateurs/edit.blade.php   → Idem avec password optionnel
+
+Communications :
+  - communications/index.blade.php → Formulaire campagne + historique
+
+Composants :
+  - components/sidebar.blade.php → Menus complets par role avec etat actif
+
+--------------------------------------------------------------------
+5. ROUTES (routes/web.php) — 57 routes
+--------------------------------------------------------------------
+- Auth : login, logout
+- Dashboard : /dashboard (dispatch par role)
+- Resources : clientes, factures, rendezvous, depenses, operations-bancaires, utilisateurs, communications
+- Caisse : /caisse
+- API internes : /api/clientes/*, /api/factures/*, /api/stats/*
+- Middleware par groupe : role:superadmin|admin, role:agent, role:compta, etc.
+
+--------------------------------------------------------------------
+6. CORRECTION MAJEURE
+--------------------------------------------------------------------
+- Probleme : MySQL MAMP Pro demarre en mode socket uniquement (port: 0, pas de TCP)
+- Solution : Ajout DB_SOCKET=/Applications/MAMP/tmp/mysql/mysql.sock dans .env
+- Les deux connexions (mysql + mysql_latin1) fonctionnent via socket Unix
+
+--------------------------------------------------------------------
+7. ETAT DE LA BASE
+--------------------------------------------------------------------
+- 11 utilisateurs, 348 clientes, 23 prestations
+- Aucune modification de schema
+- Connexion latin1 pour table depenses OK
+
+--------------------------------------------------------------------
+8. TECHNOLOGIES UTILISEES
+--------------------------------------------------------------------
+- Chart.js 4        → Graphiques dashboards (line, bar, doughnut)
+- DataTables         → Listes paginées/filtrées
+- SweetAlert2        → Confirmations et alertes
+- jQuery             → AJAX et DOM
+- Bootstrap 5        → Layout (via design system custom)
+- Design system CSS  → Tokens, composants, animations (Phase 1)
+
+====================================================================
+  PROCHAINE ETAPE : Phase 3 — PWA Cliente Mobile
+  - manifest.json, sw.js, offline.html
+  - Pages : home_cliente, rdv_cliente, historique_cliente
+  - Notifications push, pull-to-refresh, cache offline
+====================================================================
