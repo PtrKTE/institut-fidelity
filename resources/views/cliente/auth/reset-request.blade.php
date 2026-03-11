@@ -1,5 +1,5 @@
 @extends('layouts.cliente')
-@section('title', 'Mot de passe oublie — Prestige by ProNails')
+@section('title', 'Mot de passe oublie')
 
 @section('full-page', true)
 

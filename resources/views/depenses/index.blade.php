@@ -5,11 +5,16 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="mb-0"><i class="fas fa-receipt me-2"></i>Depenses</h4>
-    @if(in_array(auth()->user()->role, ['agent', 'superadmin', 'admin']))
-        <button class="btn-fid-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
-            <i class="fas fa-plus me-1"></i>Nouvelle depense
-        </button>
-    @endif
+    <div class="d-flex gap-2">
+        <a href="{{ route('exports.depenses.excel', request()->query()) }}" class="btn-fid-ghost btn-sm">
+            <i class="fas fa-file-excel me-1 text-success"></i>Excel
+        </a>
+        @if(in_array(auth()->user()->role, ['agent', 'superadmin', 'admin']))
+            <button class="btn-fid-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addModal">
+                <i class="fas fa-plus me-1"></i>Nouvelle depense
+            </button>
+        @endif
+    </div>
 </div>
 
 {{-- Filtres --}}

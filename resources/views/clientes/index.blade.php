@@ -27,6 +27,15 @@
                 <i class="fas fa-trash me-1"></i>Supprimer
             </button>
         @endif
+        <div class="dropdown d-inline">
+            <button class="btn-fid-ghost btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+                <i class="fas fa-download me-1"></i>Exporter
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ route('exports.clientes.excel', request()->query()) }}"><i class="fas fa-file-excel me-2 text-success"></i>Excel</a></li>
+                <li><a class="dropdown-item" href="{{ route('exports.clientes.pdf', request()->query()) }}"><i class="fas fa-file-pdf me-2 text-danger"></i>PDF</a></li>
+            </ul>
+        </div>
         <a href="{{ route('clientes.create') }}" class="btn-fid-primary btn-sm">
             <i class="fas fa-plus me-1"></i>Nouvelle cliente
         </a>

@@ -1,0 +1,72 @@
+====================================================
+  PHASE 4 — POLISH BACK-OFFICE & EXPORTS
+  Pronails Fidelity — Laravel 12
+  Date : 2026-03-11
+====================================================
+
+1. RENOMMAGE APPLICATION
+   - Nom : "Pronails Fidelity" (manifest.json, layouts, banner PWA)
+
+2. ICONES PWA REGENEREES
+   - icon-192.png et icon-512.png : logo ProNails sur fond degrade blanc→rose
+   - Favicons : favicon.ico, favicon-16x16.png, favicon-32x32.png
+
+3. SIDEBAR ALIGNEE PAR ROLE (identique a l'ancienne version PHP)
+   - superadmin : 10 menus (Dashboard, Ajouter cliente, Toutes clientes, Caisse, Historique factures, RDV, Depenses, Banque, Utilisateurs, Communications)
+   - admin : 4 menus (Dashboard, Clientes, Factures, RDV)
+   - agent : 7 menus (Dashboard, Mes clientes, Ma caisse, Mes factures, Mes depenses, Operations bancaires, Mes RDV)
+   - compta : 7 menus (Dashboard, Ajouter cliente, Mes clientes, Ma caisse, Mes factures, Mes depenses, Mes RDV)
+   - comm : 5 menus (Dashboard, Ajouter cliente, Toutes clientes, RDV, Communications)
+   - Ajout role compta aux groupes middleware clientes/rendezvous/depenses
+
+4. DASHBOARDS COMPACTS
+   - Stat cards en layout horizontal (icone + body)
+   - Padding 18px, font-size valeurs 1.50em
+   - 5 dashboards mis a jour (superadmin, admin, agent, compta, comm)
+
+5. SYSTEME DE NOTIFICATIONS
+   - NotificationApiController : RDV en attente, nouvelles clientes, factures du jour
+   - Badge compteur dans sidebar + offcanvas panel
+   - Dark mode support
+
+6. EXPORTS PDF & EXCEL
+   - ExportController avec 7 methodes :
+     * clientesExcel, clientesPdf
+     * facturesExcel, facturesPdf
+     * facturePdf (facture individuelle avec detail prestations)
+     * depensesExcel
+     * operationsExcel
+   - Templates PDF Blade : clientes-pdf, factures-pdf, facture-single-pdf
+   - Boutons export ajoutes sur : clientes, factures, depenses, operations bancaires
+
+7. DARK MODE AMELIORE
+   - Toggle avec icone lune/soleil dans le header
+   - Offcanvas notifications stylise en dark mode
+
+8. CORRECTION BUGS
+   - EspaceClienteController : client_id (pas cliente_id) pour table factures
+   - ExportController : colonnes corrigees (depenses, operations, factures)
+
+FICHIERS CREES :
+  - app/Http/Controllers/Api/NotificationApiController.php
+  - app/Http/Controllers/ExportController.php
+  - resources/views/exports/clientes-pdf.blade.php
+  - resources/views/exports/factures-pdf.blade.php
+  - resources/views/exports/facture-single-pdf.blade.php
+  - public/img/lgpd.png, carte_bg.png, favicon*.png
+
+FICHIERS MODIFIES :
+  - public/css/components.css (stat cards, notifications, dark mode)
+  - public/css/cliente.css (carte fidelite design)
+  - public/manifest.json
+  - resources/views/components/sidebar.blade.php
+  - resources/views/layouts/app.blade.php
+  - resources/views/layouts/cliente.blade.php
+  - resources/views/dashboard/*.blade.php (5 fichiers)
+  - resources/views/clientes/index.blade.php
+  - resources/views/factures/index.blade.php
+  - resources/views/depenses/index.blade.php
+  - resources/views/operations-bancaires/index.blade.php
+  - resources/views/cliente/*.blade.php (auth + espace)
+  - routes/web.php
+  - app/Http/Controllers/Cliente/EspaceClienteController.php

@@ -2,35 +2,43 @@
 @section('title', 'Dashboard Admin')
 
 @section('content')
-<h4 class="mb-4"><i class="fas fa-chart-pie me-2"></i>Dashboard Admin</h4>
+<h4 class="mb-3"><i class="fas fa-chart-pie me-2"></i>Dashboard Admin</h4>
 
-<div class="row g-3 fid-stagger">
+<div class="row g-2 fid-stagger">
     <div class="col-md-3 col-6">
         <div class="fid-card fid-stat">
             <div class="fid-stat-icon"><i class="fas fa-coins"></i></div>
-            <div class="fid-stat-value" id="caJour">—</div>
-            <div class="fid-stat-label">CA du jour</div>
+            <div class="fid-stat-body">
+                <div class="fid-stat-value" id="caJour">—</div>
+                <div class="fid-stat-label">CA du jour</div>
+            </div>
         </div>
     </div>
     <div class="col-md-3 col-6">
         <div class="fid-card fid-stat">
             <div class="fid-stat-icon"><i class="fas fa-file-invoice"></i></div>
-            <div class="fid-stat-value" id="nbFactures">—</div>
-            <div class="fid-stat-label">Factures (mois)</div>
+            <div class="fid-stat-body">
+                <div class="fid-stat-value" id="nbFactures">—</div>
+                <div class="fid-stat-label">Factures (mois)</div>
+            </div>
         </div>
     </div>
     <div class="col-md-3 col-6">
         <div class="fid-card fid-stat">
             <div class="fid-stat-icon"><i class="fas fa-users"></i></div>
-            <div class="fid-stat-value" id="nbClientes">—</div>
-            <div class="fid-stat-label">Clientes actives</div>
+            <div class="fid-stat-body">
+                <div class="fid-stat-value" id="nbClientes">—</div>
+                <div class="fid-stat-label">Clientes actives</div>
+            </div>
         </div>
     </div>
     <div class="col-md-3 col-6">
         <div class="fid-card fid-stat">
             <div class="fid-stat-icon"><i class="fas fa-calendar-check"></i></div>
-            <div class="fid-stat-value" id="rdvAttente">—</div>
-            <div class="fid-stat-label">RDV en attente</div>
+            <div class="fid-stat-body">
+                <div class="fid-stat-value" id="rdvAttente">—</div>
+                <div class="fid-stat-label">RDV en attente</div>
+            </div>
         </div>
     </div>
 </div>
@@ -39,13 +47,13 @@
     <div class="col-lg-8">
         <div class="fid-card p-3 fid-slide-up">
             <h6 class="fw-bold mb-3">Evolution du CA</h6>
-            <canvas id="chartCaJour" height="280"></canvas>
+            <canvas id="chartCaJour" height="250"></canvas>
         </div>
     </div>
     <div class="col-lg-4">
         <div class="fid-card p-3 fid-slide-up">
             <h6 class="fw-bold mb-3">CA par lieu</h6>
-            <canvas id="chartCaLieu" height="280"></canvas>
+            <canvas id="chartCaLieu" height="250"></canvas>
         </div>
     </div>
 </div>

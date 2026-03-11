@@ -9,9 +9,20 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="mb-0"><i class="fas fa-file-invoice me-2"></i>Historique des factures</h4>
-    <a href="{{ route('factures.create') }}" class="btn-fid-primary btn-sm">
-        <i class="fas fa-cash-register me-1"></i>Caisse
-    </a>
+    <div class="d-flex gap-2">
+        <div class="dropdown">
+            <button class="btn-fid-ghost btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+                <i class="fas fa-download me-1"></i>Exporter
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#" id="exportExcel"><i class="fas fa-file-excel me-2 text-success"></i>Excel</a></li>
+                <li><a class="dropdown-item" href="#" id="exportPdf"><i class="fas fa-file-pdf me-2 text-danger"></i>PDF</a></li>
+            </ul>
+        </div>
+        <a href="{{ route('factures.create') }}" class="btn-fid-primary btn-sm">
+            <i class="fas fa-cash-register me-1"></i>Caisse
+        </a>
+    </div>
 </div>
 
 {{-- Filtres --}}
@@ -136,6 +147,7 @@ let table = $('#facturesTable').DataTable({
             render: function(id) {
                 return `<div class="d-flex gap-1">
                     <button class="btn btn-sm btn-outline-primary btn-view" data-id="${id}"><i class="fas fa-eye"></i></button>
+                    <a href="{{ url('/exports/facture') }}/${id}/pdf" class="btn btn-sm btn-outline-secondary" title="PDF"><i class="fas fa-file-pdf"></i></a>
                     <button class="btn btn-sm btn-outline-danger btn-del" data-id="${id}"><i class="fas fa-trash"></i></button>
                 </div>`;
             }
@@ -197,6 +209,17 @@ $(document).on('click', '.btn-view', function() {
         }
     });
 });
+
+// Exports avec filtres
+function buildExportUrl(base) {
+    const params = new URLSearchParams();
+    if ($('#filterDateStart').val()) params.set('date_start', $('#filterDateStart').val());
+    if ($('#filterDateEnd').val()) params.set('date_end', $('#filterDateEnd').val());
+    if ($('#filterLieu').val()) params.set('lieu', $('#filterLieu').val());
+    return base + '?' + params.toString();
+}
+$('#exportExcel').on('click', function(e) { e.preventDefault(); window.location = buildExportUrl("{{ route('exports.factures.excel') }}"); });
+$('#exportPdf').on('click', function(e) { e.preventDefault(); window.location = buildExportUrl("{{ route('exports.factures.pdf') }}"); });
 
 // Supprimer
 $(document).on('click', '.btn-del', function() {

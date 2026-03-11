@@ -1,11 +1,11 @@
 @extends('layouts.cliente')
-@section('title', 'Accueil — Prestige by ProNails')
+@section('title', 'Accueil')
 @section('show-nav', true)
 
 @section('content')
 {{-- Header --}}
 <div class="cliente-header">
-    <img src="{{ url('/public/img/lgp.png') }}" class="logo" alt="ProNails">
+    <img src="{{ asset('img/lgp.png') }}" class="logo" alt="ProNails">
     <p class="welcome">Bonjour {{ $cliente->prenom }} !</p>
     <p class="subtitle">Bienvenue dans votre espace Prestige</p>
 </div>
@@ -52,7 +52,7 @@
                 &bull; <i class="fas fa-map-marker-alt"></i> {{ $prochainRdv->lieu }}
             </div>
         </div>
-        <span class="badge-statut badge-{{ $prochainRdv->statut }}">{{ ucfirst(str_replace('_', ' ', $prochainRdv->statut)) }}</span>
+        <span class="badge-statut badge-{{ $prochainRdv->status }}">{{ ucfirst(str_replace('_', ' ', $prochainRdv->status)) }}</span>
     </div>
 </div>
 @endif
@@ -93,7 +93,7 @@ $.get("{{ route('espace-cliente.api.top-prestations') }}", function(data) {
     let html = '';
     data.forEach(p => {
         html += `<div class="d-flex justify-content-between align-items-center py-1 border-bottom">
-            <span class="small">${p.libelle_prestation}</span>
+            <span class="small">${p.libelle}</span>
             <span class="small text-muted">${p.nb}x &bull; ${fmt(p.total)} F</span>
         </div>`;
     });

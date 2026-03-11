@@ -1,5 +1,5 @@
 @extends('layouts.cliente')
-@section('title', 'Inscription — Prestige by ProNails')
+@section('title', 'Inscription')
 
 @section('full-page', true)
 

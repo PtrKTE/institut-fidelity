@@ -1,5 +1,5 @@
 @extends('layouts.cliente')
-@section('title', 'Ma carte — Prestige by ProNails')
+@section('title', 'Ma carte')
 @section('show-nav', true)
 
 @section('content')
@@ -17,9 +17,7 @@
                 <div class="carte-gold">CARTE FIDELITE</div>
             </div>
             @if($cliente->taux_reduction > 0)
-                <div style="background:var(--color-accent-gold);color:#333;padding:3px 10px;border-radius:12px;font-size:0.75rem;font-weight:700">
-                    -{{ intval($cliente->taux_reduction) }}%
-                </div>
+                <div class="carte-badge-taux">-{{ intval($cliente->taux_reduction) }}%</div>
             @endif
         </div>
 
@@ -38,16 +36,9 @@
                     {{ $exp }}
                 </div>
             </div>
-            <img src="{{ url('/public/img/lgpf.png') }}" style="height:24px;opacity:0.7" alt="">
+            <img src="{{ asset('img/lgpd.png') }}" style="height:24px;opacity:0.8" alt="">
         </div>
     </div>
-</div>
-
-{{-- Barcode --}}
-<div class="carte-barcode">
-    <img src="{{ url('/api/barcode/' . ($cliente->numero_carte ?? 'UNKNOWN')) }}" alt="barcode" id="barcodeImg"
-         onerror="this.style.display='none'">
-    <div class="small text-muted mt-1">{{ $cliente->numero_carte }}</div>
 </div>
 
 {{-- Download button --}}

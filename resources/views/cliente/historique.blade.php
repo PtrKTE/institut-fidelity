@@ -1,5 +1,5 @@
 @extends('layouts.cliente')
-@section('title', 'Mon historique — Prestige by ProNails')
+@section('title', 'Mon historique')
 @section('show-nav', true)
 
 @section('content')
@@ -21,7 +21,7 @@
     @forelse($factures as $f)
         @php
             $prestations = \App\Models\FacturePrestation::where('facture_id', $f->id)
-                ->pluck('libelle_prestation')->implode(', ');
+                ->pluck('libelle')->implode(', ');
         @endphp
         <div class="facture-item">
             <div>

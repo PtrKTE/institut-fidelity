@@ -1,6 +1,6 @@
 {
-    "name": "Prestige by ProNails",
-    "short_name": "Prestige",
+    "name": "Pronails Fidelity",
+    "short_name": "Pronails Fidelity",
     "description": "Espace cliente — Programme de fidélité ProNails Abidjan",
     "start_url": "/fidelity-laravel/espace-cliente",
     "scope": "/fidelity-laravel/espace-cliente",

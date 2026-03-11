@@ -126,56 +126,66 @@
     margin-bottom: 10px;
 }
 
-/* Mini carte fidélité */
+/* Mini carte fidélité — Noir/Doré */
 .mini-carte {
-    background: linear-gradient(135deg, #c4226e 0%, #8b1a52 100%);
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(255,255,255,0.02) 0px,
+            rgba(255,255,255,0.02) 1px,
+            transparent 1px,
+            transparent 14px
+        ),
+        linear-gradient(160deg, #2a2a2a 0%, #1a1a1a 40%, #2d2d2d 60%, #1a1a1a 100%);
     border-radius: 14px;
     padding: 18px;
-    color: #fff;
+    color: #cab079;
     position: relative;
     overflow: hidden;
     margin-bottom: 14px;
-    box-shadow: 0 4px 16px rgba(196, 34, 110, 0.25);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(202, 176, 121, 0.1);
 }
 
 .mini-carte::after {
     content: '';
     position: absolute;
-    top: -30%;
-    right: -20%;
-    width: 60%;
-    height: 160%;
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: 50%;
-    transform: rotate(-15deg);
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(202, 176, 121, 0.3), transparent);
+    transform: translateY(-50%);
 }
 
 .mini-carte .carte-label {
     font-size: 0.6rem;
     text-transform: uppercase;
     letter-spacing: 2px;
-    opacity: 0.7;
+    opacity: 0.6;
+    color: #cab079;
 }
 
 .mini-carte .carte-nom {
     font-size: 1.05rem;
     font-weight: 700;
     margin: 4px 0;
+    color: #cab079;
 }
 
 .mini-carte .carte-num {
     font-size: 0.72rem;
     font-family: 'Courier New', monospace;
     letter-spacing: 1.5px;
-    opacity: 0.85;
+    opacity: 0.75;
+    color: #cab079;
 }
 
 .mini-carte .carte-taux {
     position: absolute;
     top: 14px;
     right: 16px;
-    background: var(--color-accent-gold);
-    color: #333;
+    background: linear-gradient(135deg, #cab079, #e0c992);
+    color: #1a1a1a;
     font-size: 0.68rem;
     font-weight: 700;
     padding: 3px 10px;
@@ -313,19 +323,19 @@
     white-space: nowrap;
 }
 
-/* Carte fidélité full */
+/* Carte fidélité full — Noir/Doré Premium */
 .carte-fidelite-full {
     width: 100%;
     max-width: 380px;
     aspect-ratio: 1.586;
     margin: 0 auto;
-    background: linear-gradient(135deg, #c4226e 0%, #6a1039 50%, #c4226e 100%);
+    background: linear-gradient(135deg, #2a2a2a 0%, #111 50%, #2a2a2a 100%);
     border-radius: 16px;
     padding: 20px;
-    color: #fff;
+    color: #cab079;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(196, 34, 110, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(202, 176, 121, 0.12);
 }
 
 .carte-fidelite-full::before {
@@ -335,7 +345,7 @@
     right: -30%;
     width: 80%;
     height: 180%;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(202, 176, 121, 0.03);
     border-radius: 50%;
     transform: rotate(-20deg);
 }
@@ -351,13 +361,23 @@
     font-size: 0.6rem;
     text-transform: uppercase;
     letter-spacing: 2px;
-    opacity: 0.7;
+    opacity: 0.5;
+    color: #cab079;
 }
 
 .carte-fidelite-full .carte-gold {
-    color: var(--color-accent-gold);
+    color: #cab079;
     font-weight: 700;
     font-size: 0.72rem;
+}
+
+.carte-fidelite-full .carte-badge-taux {
+    background: linear-gradient(135deg, #cab079, #e0c992);
+    color: #1a1a1a;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
 }
 
 .carte-fidelite-full .carte-holder {
@@ -366,13 +386,15 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     margin: 14px 0 4px;
+    color: #cab079;
 }
 
 .carte-fidelite-full .carte-number {
     font-family: 'Courier New', monospace;
     font-size: 0.82rem;
     letter-spacing: 2px;
-    opacity: 0.9;
+    opacity: 0.8;
+    color: #cab079;
 }
 
 .carte-fidelite-full .carte-bottom {
@@ -388,26 +410,16 @@
 .carte-fidelite-full .carte-expiry-label {
     font-size: 0.5rem;
     text-transform: uppercase;
-    opacity: 0.6;
+    opacity: 0.5;
+    color: #cab079;
 }
 
 .carte-fidelite-full .carte-expiry {
     font-size: 0.78rem;
     font-weight: 600;
+    color: #cab079;
 }
 
-.carte-barcode {
-    text-align: center;
-    margin-top: 16px;
-}
-
-.carte-barcode img {
-    max-width: 200px;
-    height: 40px;
-    background: #fff;
-    padding: 4px 8px;
-    border-radius: 4px;
-}
 
 /* Profil */
 .profil-avatar {

@@ -7,10 +7,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Prestige by ProNails')</title>
+    <title>@yield('title', 'Pronails Fidelity')</title>
 
     <link rel="manifest" href="{{ asset('manifest.json') }}">
-    <link rel="icon" href="{{ asset('img/lgp.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('img/favicon-16x16.png') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link rel="apple-touch-icon" href="{{ asset('img/icon-192.png') }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,9 +68,9 @@
 
     {{-- PWA Install Banner --}}
     <div class="pwa-install-banner" id="pwaBanner">
-        <img src="{{ asset('img/icon-192.png') }}" class="pwa-icon" alt="Prestige">
+        <img src="{{ asset('img/icon-192.png') }}" class="pwa-icon" alt="Pronails Fidelity">
         <div class="pwa-text">
-            <strong>Installer Prestige</strong>
+            <strong>Installer Pronails Fidelity</strong>
             Acces rapide depuis votre ecran
         </div>
         <button class="btn-install" id="btnInstall">Installer</button>

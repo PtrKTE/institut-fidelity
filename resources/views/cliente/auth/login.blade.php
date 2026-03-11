@@ -1,5 +1,5 @@
 @extends('layouts.cliente')
-@section('title', 'Connexion — Prestige by ProNails')
+@section('title', 'Connexion')
 @section('full-page', true)
 
 @section('content')
@@ -24,14 +24,14 @@
                 <label class="form-label small fw-medium">Email</label>
                 <div class="input-icon-wrap">
                     <i class="fas fa-envelope input-icon"></i>
-                    <input type="email" name="email" class="fid-input ps-5" value="{{ old('email') }}" required autofocus placeholder="votre@email.com">
+                    <input type="email" name="email" class="fid-input w-100" value="{{ old('email') }}" required autofocus placeholder="votre@email.com" style="padding-left:40px">
                 </div>
             </div>
             <div class="mb-3">
                 <label class="form-label small fw-medium">Mot de passe</label>
                 <div class="input-icon-wrap">
                     <i class="fas fa-lock input-icon"></i>
-                    <input type="password" name="password" class="fid-input ps-5 pe-5" id="pwd" required placeholder="Votre mot de passe">
+                    <input type="password" name="password" class="fid-input w-100" id="pwd" required placeholder="Votre mot de passe" style="padding-left:40px;padding-right:44px">
                     <button type="button" class="btn-eye" onclick="togglePwd()">
                         <i class="fas fa-eye" id="eyeIcon"></i>
                     </button>

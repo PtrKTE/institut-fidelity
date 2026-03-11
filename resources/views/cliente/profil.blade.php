@@ -1,5 +1,5 @@
 @extends('layouts.cliente')
-@section('title', 'Mon profil — Prestige by ProNails')
+@section('title', 'Mon profil')
 @section('show-nav', true)
 
 @section('content')

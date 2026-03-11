@@ -2,7 +2,7 @@
 @section('title', 'Dashboard Comptabilite')
 
 @section('content')
-<h4 class="mb-4"><i class="fas fa-calculator me-2"></i>Dashboard Comptabilite</h4>
+<h4 class="mb-3"><i class="fas fa-calculator me-2"></i>Dashboard Comptabilite</h4>
 
 <div class="fid-card mb-3">
     <div class="p-3 d-flex gap-2 align-items-end">
@@ -14,33 +14,41 @@
     </div>
 </div>
 
-<div class="row g-3 mb-3 fid-stagger">
+<div class="row g-2 mb-3 fid-stagger">
     <div class="col-md-3 col-6">
         <div class="fid-card fid-stat">
             <div class="fid-stat-icon"><i class="fas fa-coins"></i></div>
-            <div class="fid-stat-value" id="caTotal">—</div>
-            <div class="fid-stat-label">CA Total</div>
+            <div class="fid-stat-body">
+                <div class="fid-stat-value" id="caTotal">—</div>
+                <div class="fid-stat-label">CA Total</div>
+            </div>
         </div>
     </div>
     <div class="col-md-3 col-6">
         <div class="fid-card fid-stat">
             <div class="fid-stat-icon"><i class="fas fa-file-invoice"></i></div>
-            <div class="fid-stat-value" id="nbFactures">—</div>
-            <div class="fid-stat-label">Factures</div>
+            <div class="fid-stat-body">
+                <div class="fid-stat-value" id="nbFactures">—</div>
+                <div class="fid-stat-label">Factures</div>
+            </div>
         </div>
     </div>
     <div class="col-md-3 col-6">
         <div class="fid-card fid-stat">
             <div class="fid-stat-icon"><i class="fas fa-receipt"></i></div>
-            <div class="fid-stat-value" id="ticketMoyen">—</div>
-            <div class="fid-stat-label">Ticket moyen</div>
+            <div class="fid-stat-body">
+                <div class="fid-stat-value" id="ticketMoyen">—</div>
+                <div class="fid-stat-label">Ticket moyen</div>
+            </div>
         </div>
     </div>
     <div class="col-md-3 col-6">
         <div class="fid-card fid-stat">
             <div class="fid-stat-icon"><i class="fas fa-vault"></i></div>
-            <div class="fid-stat-value" id="coffre">—</div>
-            <div class="fid-stat-label">Coffre</div>
+            <div class="fid-stat-body">
+                <div class="fid-stat-value" id="coffre">—</div>
+                <div class="fid-stat-label">Coffre</div>
+            </div>
         </div>
     </div>
 </div>

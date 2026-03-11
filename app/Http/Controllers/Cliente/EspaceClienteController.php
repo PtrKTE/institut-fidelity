@@ -24,10 +24,10 @@ class EspaceClienteController extends Controller
     public function home()
     {
         $cliente = $this->cliente();
-        $prochainRdv = Rendezvous::where('cliente_id', $cliente->id)
+        $prochainRdv = Rendezvous::where('client_id', $cliente->id)
             ->where('date_rdv', '>=', now()->toDateString())
-            ->where('statut', '!=', 'annule')
-            ->where('statut', '!=', 'rejete')
+            ->where('status', '!=', 'annule')
+            ->where('status', '!=', 'rejete')
             ->orderBy('date_rdv')->orderBy('heure_rdv')
             ->first();
 
@@ -94,7 +94,7 @@ class EspaceClienteController extends Controller
     public function rendezvous()
     {
         $cliente = $this->cliente();
-        $rdvs = Rendezvous::where('cliente_id', $cliente->id)
+        $rdvs = Rendezvous::where('client_id', $cliente->id)
             ->orderByDesc('date_rdv')
             ->orderByDesc('heure_rdv')
             ->paginate(20);
@@ -119,7 +119,7 @@ class EspaceClienteController extends Controller
         $existing = Rendezvous::where('date_rdv', $request->date_rdv)
             ->where('heure_rdv', $request->heure_rdv)
             ->where('lieu', $request->lieu)
-            ->whereNotIn('statut', ['annule', 'rejete'])
+            ->whereNotIn('status', ['annule', 'rejete'])
             ->exists();
 
         if ($existing) {
@@ -127,13 +127,16 @@ class EspaceClienteController extends Controller
         }
 
         $rdv = new Rendezvous();
-        $rdv->cliente_id = $cliente->id;
+        $rdv->client_id = $cliente->id;
+        $rdv->nom_client = $cliente->prenom . ' ' . $cliente->nom;
+        $rdv->telephone = $cliente->telephone;
+        $rdv->email = $cliente->email;
         $rdv->date_rdv = $request->date_rdv;
         $rdv->heure_rdv = $request->heure_rdv;
         $rdv->lieu = $request->lieu;
         $rdv->prestation = $request->prestation;
-        $rdv->notes = $request->notes ?? '';
-        $rdv->statut = 'en_attente';
+        $rdv->commentaire = $request->notes ?? '';
+        $rdv->status = 'en_attente';
         $rdv->save();
 
         return response()->json(['success' => true]);
@@ -142,13 +145,13 @@ class EspaceClienteController extends Controller
     public function cancelRendezvous(Request $request, $id)
     {
         $cliente = $this->cliente();
-        $rdv = Rendezvous::where('id', $id)->where('cliente_id', $cliente->id)->firstOrFail();
+        $rdv = Rendezvous::where('id', $id)->where('client_id', $cliente->id)->firstOrFail();
 
-        if (!in_array($rdv->statut, ['en_attente', 'valide'])) {
+        if (!in_array($rdv->status, ['en_attente', 'valide'])) {
             return response()->json(['success' => false, 'message' => 'Ce RDV ne peut pas etre annule.']);
         }
 
-        $rdv->statut = 'annule';
+        $rdv->status = 'annule';
         $rdv->save();
 
         return response()->json(['success' => true]);
@@ -158,7 +161,7 @@ class EspaceClienteController extends Controller
     public function historique()
     {
         $cliente = $this->cliente();
-        $factures = Facture::where('cliente_id', $cliente->id)
+        $factures = Facture::where('client_id', $cliente->id)
             ->orderByDesc('date_facture')
             ->paginate(20);
 
@@ -171,10 +174,10 @@ class EspaceClienteController extends Controller
         $clienteId = session('cliente_id');
         $cliente = Cliente::findOrFail($clienteId);
 
-        $nbVisites = Facture::where('cliente_id', $clienteId)->count();
-        $totalDepense = Facture::where('cliente_id', $clienteId)->sum('montant_total');
-        $rdvEnAttente = Rendezvous::where('cliente_id', $clienteId)
-            ->where('statut', 'en_attente')
+        $nbVisites = Facture::where('client_id', $clienteId)->count();
+        $totalDepense = Facture::where('client_id', $clienteId)->sum('montant_total');
+        $rdvEnAttente = Rendezvous::where('client_id', $clienteId)
+            ->where('status', 'en_attente')
             ->count();
 
         return response()->json([
@@ -190,13 +193,13 @@ class EspaceClienteController extends Controller
     {
         $clienteId = session('cliente_id');
 
-        $factures = Facture::where('cliente_id', $clienteId)
+        $factures = Facture::where('client_id', $clienteId)
             ->orderByDesc('date_facture')
             ->paginate(15);
 
         $items = $factures->map(function ($f) {
             $prestations = FacturePrestation::where('facture_id', $f->id)
-                ->pluck('libelle_prestation')
+                ->pluck('libelle')
                 ->implode(', ');
             return [
                 'id' => $f->id,
@@ -218,7 +221,7 @@ class EspaceClienteController extends Controller
     {
         $clienteId = session('cliente_id');
 
-        $data = Facture::where('cliente_id', $clienteId)
+        $data = Facture::where('client_id', $clienteId)
             ->select(
                 DB::raw("DATE_FORMAT(date_facture, '%Y-%m') as mois"),
                 DB::raw('SUM(montant_total) as total')
@@ -239,9 +242,9 @@ class EspaceClienteController extends Controller
         $clienteId = session('cliente_id');
 
         $top = FacturePrestation::join('factures', 'factures.id', '=', 'facture_prestations.facture_id')
-            ->where('factures.cliente_id', $clienteId)
-            ->select('facture_prestations.libelle_prestation', DB::raw('COUNT(*) as nb'), DB::raw('SUM(facture_prestations.tarif) as total'))
-            ->groupBy('facture_prestations.libelle_prestation')
+            ->where('factures.client_id', $clienteId)
+            ->select('facture_prestations.libelle', DB::raw('COUNT(*) as nb'), DB::raw('SUM(facture_prestations.tarif) as total'))
+            ->groupBy('facture_prestations.libelle')
             ->orderByDesc('nb')
             ->limit(5)
             ->get();

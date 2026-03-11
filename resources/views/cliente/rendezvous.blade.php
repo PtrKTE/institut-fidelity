@@ -1,5 +1,5 @@
 @extends('layouts.cliente')
-@section('title', 'Mes RDV — Prestige by ProNails')
+@section('title', 'Mes RDV')
 @section('show-nav', true)
 
 @section('content')
@@ -29,13 +29,13 @@
                     <i class="fas fa-clock"></i> {{ $rdv->heure_rdv }}
                     &bull; <i class="fas fa-map-marker-alt"></i> {{ $rdv->lieu }}
                 </div>
-                @if($rdv->notes)
-                    <div class="rdv-meta"><i class="fas fa-sticky-note"></i> {{ $rdv->notes }}</div>
+                @if($rdv->commentaire)
+                    <div class="rdv-meta"><i class="fas fa-sticky-note"></i> {{ $rdv->commentaire }}</div>
                 @endif
             </div>
             <div class="text-end">
-                <span class="badge-statut badge-{{ $rdv->statut }}">{{ ucfirst(str_replace('_', ' ', $rdv->statut)) }}</span>
-                @if(in_array($rdv->statut, ['en_attente', 'valide']))
+                <span class="badge-statut badge-{{ $rdv->status }}">{{ ucfirst(str_replace('_', ' ', $rdv->status)) }}</span>
+                @if(in_array($rdv->status, ['en_attente', 'valide']))
                     <button class="btn btn-sm text-danger p-0 mt-1 d-block btn-cancel" data-id="{{ $rdv->id }}" title="Annuler">
                         <i class="fas fa-times-circle"></i>
                     </button>

@@ -1,7 +1,7 @@
 ====================================================================
   RECAP PHASE 3 — PWA Cliente Mobile
   Projet : Prestige by ProNails (Fidelity)
-  Date : 10 mars 2026
+  Date : 11 mars 2026
 ====================================================================
 
 STATUT : COMPLETE
@@ -122,8 +122,8 @@ Hors-ligne :
 --------------------------------------------------------------------
 7. DESIGN MOBILE
 --------------------------------------------------------------------
-- Mini carte fidelite gradient (#c4226e → #8b1a52) avec taux reduction
-- Carte complete full-size avec barcode, expiration, download PNG
+- Mini carte fidelite black/gold premium avec taux reduction
+- Carte complete full-size black/gold gradient, download PNG (sans barcode)
 - Stats grid 3 colonnes (visites, total F, membre depuis)
 - RDV cards avec date box coloree + badges statut
 - Factures items avec montant aligne a droite
@@ -134,13 +134,28 @@ Hors-ligne :
 - Animations fadeIn, skeleton loaders
 
 --------------------------------------------------------------------
+9. CORRECTIONS & AJUSTEMENTS (11 mars 2026)
+--------------------------------------------------------------------
+- Fix colonnes DB : cliente_id → client_id (factures), statut → status (rendezvous),
+  notes → commentaire, libelle_prestation → libelle (facture_prestations)
+- Carte fidelite : design black/gold premium (gradient noir, textes dores #cab079)
+- Suppression barcode de la carte (bouton telecharger conserve)
+- Fix "undefined" dans top prestations (JS p.libelle_prestation → p.libelle)
+- Titres pages : format "Nom de la page" uniquement
+- Renommage app : Pronails Fidelity (manifest, layout, banniere PWA)
+- Icone PWA : logo ProNails sur fond degrade blanc→rose (bien visible)
+- Fix asset paths : url('/public/...') → asset('...')
+
+--------------------------------------------------------------------
 8. DIRECTIVE BLADE CUSTOM
 --------------------------------------------------------------------
 - @auth_cliente / @end_auth_cliente → Conditionnel sur session('cliente_id')
 - Enregistree dans AppServiceProvider::boot()
 
 ====================================================================
+  APP : Pronails Fidelity
   ACCES : http://localhost:8888/fidelity-laravel/espace-cliente/login
+  TEST : gabrielleadakouassi@yahoo.fr / Test1234
 
   PROCHAINE ETAPE : Phase 4 — Modules Laravel restants + polish
   - Revoir vues par role (admin, agent, compta, comm)

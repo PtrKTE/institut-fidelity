@@ -28,7 +28,7 @@ Route::middleware(['auth', 'multi_session', 'session_timeout', 'anti_hijack', 'a
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // ─── CLIENTES ──────────────────────────────────────
-        Route::middleware('role:superadmin,admin,agent,comm')->group(function () {
+        Route::middleware('role:superadmin,admin,agent,compta,comm')->group(function () {
             Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes.index');
             Route::get('/clientes/create', [ClienteController::class, 'create'])->name('clientes.create');
             Route::post('/clientes', [ClienteController::class, 'store'])->name('clientes.store');
@@ -50,7 +50,7 @@ Route::middleware(['auth', 'multi_session', 'session_timeout', 'anti_hijack', 'a
         });
 
         // ─── RENDEZ-VOUS ───────────────────────────────────
-        Route::middleware('role:superadmin,admin,agent,comm')->group(function () {
+        Route::middleware('role:superadmin,admin,agent,compta,comm')->group(function () {
             Route::get('/rendezvous', [RendezvousController::class, 'index'])->name('rendezvous.index');
             Route::get('/rendezvous/create', [RendezvousController::class, 'create'])->name('rendezvous.create');
             Route::post('/rendezvous', [RendezvousController::class, 'store'])->name('rendezvous.store');
@@ -59,7 +59,7 @@ Route::middleware(['auth', 'multi_session', 'session_timeout', 'anti_hijack', 'a
         });
 
         // ─── DEPENSES ──────────────────────────────────────
-        Route::middleware('role:superadmin,admin,agent')->group(function () {
+        Route::middleware('role:superadmin,admin,agent,compta')->group(function () {
             Route::get('/depenses', [DepenseController::class, 'index'])->name('depenses.index');
             Route::post('/depenses', [DepenseController::class, 'store'])->name('depenses.store');
             Route::delete('/depenses/{depense}', [DepenseController::class, 'destroy'])->name('depenses.destroy');
@@ -123,7 +123,29 @@ Route::middleware(['auth', 'multi_session', 'session_timeout', 'anti_hijack', 'a
             Route::get('/ca-lieu', [StatsApiController::class, 'caLieu'])->name('api.stats.ca-lieu');
             Route::get('/compta', [StatsApiController::class, 'compta'])->name('api.stats.compta');
         });
+
+        // Notifications API
+        Route::get('/api/notifications', [\App\Http\Controllers\Api\NotificationApiController::class, 'index']);
+        Route::get('/api/notifications/count', [\App\Http\Controllers\Api\NotificationApiController::class, 'count']);
+
+        // Exports
+        Route::prefix('exports')->group(function () {
+            Route::get('/clientes/excel', [\App\Http\Controllers\ExportController::class, 'clientesExcel'])->name('exports.clientes.excel');
+            Route::get('/clientes/pdf', [\App\Http\Controllers\ExportController::class, 'clientesPdf'])->name('exports.clientes.pdf');
+            Route::get('/factures/excel', [\App\Http\Controllers\ExportController::class, 'facturesExcel'])->name('exports.factures.excel');
+            Route::get('/factures/pdf', [\App\Http\Controllers\ExportController::class, 'facturesPdf'])->name('exports.factures.pdf');
+            Route::get('/facture/{facture}/pdf', [\App\Http\Controllers\ExportController::class, 'facturePdf'])->name('exports.facture.pdf');
+            Route::get('/depenses/excel', [\App\Http\Controllers\ExportController::class, 'depensesExcel'])->name('exports.depenses.excel');
+            Route::get('/operations/excel', [\App\Http\Controllers\ExportController::class, 'operationsExcel'])->name('exports.operations.excel');
+        });
     });
+
+// ─── Barcode Generator (public) ──────────────────────────────
+Route::get('/barcode/{code}', function (string $code) {
+    $generator = new \Picqer\Barcode\BarcodeGeneratorPNG();
+    $png = $generator->getBarcode($code, $generator::TYPE_CODE_128, 2, 40);
+    return response($png)->header('Content-Type', 'image/png')->header('Cache-Control', 'public, max-age=86400');
+})->where('code', '[A-Za-z0-9]+')->name('barcode');
 
 // ═══════════════════════════════════════════════════════════════
 // ESPACE CLIENTE (PWA)
